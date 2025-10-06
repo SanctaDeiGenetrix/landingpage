@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Genetrix Brand Colors */
+    --midnight: 240 30% 5%;
+    --deep-blue: 230 60% 30%;
+    --mystic-purple: 261 30% 41%;
+    --magical-gold: 45 65% 53%;
+    --pink-haze: 270 100% 89%;
+    
+    /* Core Tokens */
+    --background: 240 30% 5%;
+    --foreground: 270 100% 98%;
+
+    --card: 240 20% 8%;
+    --card-foreground: 270 100% 98%;
+
+    --popover: 240 25% 10%;
+    --popover-foreground: 270 100% 98%;
+
+    --primary: 45 65% 53%;
+    --primary-foreground: 240 30% 5%;
+
+    --secondary: 230 60% 30%;
+    --secondary-foreground: 270 100% 98%;
+
+    --muted: 240 15% 15%;
+    --muted-foreground: 270 30% 70%;
+
+    --accent: 261 30% 41%;
+    --accent-foreground: 270 100% 98%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 270 100% 98%;
+
+    --border: 240 20% 15%;
+    --input: 240 20% 15%;
+    --ring: 45 65% 53%;
+
+    --radius: 1rem;
+
+    /* Gradients */
+    --gradient-magical: linear-gradient(135deg, hsl(230 60% 30%), hsl(261 30% 41%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 65% 53%), hsl(35 70% 60%));
+    --gradient-ethereal: linear-gradient(180deg, hsl(240 30% 5% / 0.8), hsl(261 30% 41% / 0.3));
+    
+    /* Glows & Effects */
+    --glow-gold: 0 0 40px hsl(45 65% 53% / 0.4);
+    --glow-purple: 0 0 30px hsl(261 30% 41% / 0.3);
+    --shadow-cinematic: 0 20px 60px hsl(240 30% 5% / 0.7);
+    
+    /* Transitions */
+    --transition-magical: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
+  }
+
+  .cinematic-text {
+    text-shadow: 0 0 20px hsl(var(--magical-gold) / 0.3);
+  }
+
+  .magical-glow {
+    box-shadow: var(--glow-gold);
+  }
+
+  .ethereal-glow {
+    box-shadow: var(--glow-purple);
+  }
+}
+
+@layer utilities {
+  .gradient-magical {
+    background: var(--gradient-magical);
+  }
+
+  .gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .gradient-ethereal {
+    background: var(--gradient-ethereal);
+  }
+}
