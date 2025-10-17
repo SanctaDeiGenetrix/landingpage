@@ -2,7 +2,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Sparkles } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -10,14 +10,26 @@ const ContactSection = () => {
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
+    phone: "",
     email: "",
     message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent! We'll be in touch soon.");
-    setFormData({ name: "", email: "", message: "" });
+
+    const { name, email, message } = formData;
+
+    const whatsappNumber = "5545991580812"; // no '+' or spaces
+    const text = `Olá! \n\nNovo contato através do site:\n\n Nome: ${name}\n Email: ${email}\n Mensagem: ${message}`;
+    const encodedText = encodeURIComponent(text);
+
+    // open WhatsApp chat in a new tab
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedText}`;
+    window.open(whatsappUrl, "_blank");
+
+    toast.success("Message sent via WhatsApp! We'll be in touch soon.");
+    setFormData({ name: "", phone: "", email: "", message: "" });
   };
 
   return (
@@ -26,7 +38,6 @@ const ContactSection = () => {
 
       <div className="container mx-auto max-w-4xl relative z-10">
         <div className="text-center mb-12">
-          {/* <Sparkles className="w-12 h-12 text-magical-gold mx-auto mb-6 animate-glow-pulse" /> */}
           <img
             src="/logo.png"
             alt="Genetrix Logo"
@@ -48,6 +59,18 @@ const ContactSection = () => {
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
+              }
+              required
+              className="bg-background/50 border-magical-gold/30 focus:border-magical-gold transition-colors"
+            />
+          </div>
+          <div>
+            <Input
+              type="phone"
+              placeholder={t("contact.phone")}
+              value={formData.phone}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
               }
               required
               className="bg-background/50 border-magical-gold/30 focus:border-magical-gold transition-colors"
@@ -83,8 +106,9 @@ const ContactSection = () => {
           <Button
             type="submit"
             size="lg"
-            className="w-full magical-glow text-lg py-6"
+            className="w-full magical-glow text-lg py-6 flex items-center justify-center gap-3"
           >
+            <MessageCircle className="w-6 h-6" />
             {t("contact.send")}
           </Button>
         </form>

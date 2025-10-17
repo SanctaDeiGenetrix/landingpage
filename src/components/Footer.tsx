@@ -27,8 +27,8 @@ const Footer = () => {
           <div>
             <h4 className="font-cinzel text-lg font-bold mb-4">Contact</h4>
             <div className="space-y-2 text-foreground/70 text-sm">
-              <p>contact@genetrix.studio</p>
-              <p>+1 (555) 123-4567</p>
+              <p>contact@genetrixstudios.com</p>
+              <p>+55 (45) 991580812</p>
             </div>
           </div>
 
