@@ -52,15 +52,15 @@ export default function ImageCarousel() {
       onMouseEnter={pause}
       onMouseLeave={resume}
     >
-      <AnimatePresence initial={false} custom={direction} mode="wait">
+      <AnimatePresence initial={false} custom={direction} mode="sync">
         <motion.img
           key={images[index]}
           src={images[index]}
           alt={`slide-${index}`}
           className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-          initial={{ opacity: 0, x: direction * 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -direction * 60 }}
+          initial={{ opacity: 0}}
+          animate={{ opacity: 1}}
+          exit={{ opacity: 0}}
           transition={{ duration: 0.9, ease: "easeInOut" }}
           style={{ x }}
           drag="x"
