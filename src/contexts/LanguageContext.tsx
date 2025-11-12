@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {createContext, useContext, useState, ReactNode, useEffect} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 
 type Language = "en" | "pt" | "es";
 
@@ -198,28 +199,38 @@ const translations = {
   },
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(
-  undefined
-);
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>("en");
+    const { lang } = useParams<{ lang: Language }>();
+    const navigate = useNavigate();
+    const [language, setLanguage] = useState<Language>("pt");
 
-  const t = (key: string): string => {
-    return translations[language][key] || key;
-  };
+    useEffect(() => {
+        if (lang && ["en", "es", "pt"].includes(lang)) {
+            setLanguage(lang);
+        } else if (lang === undefined) {
+            navigate(`/pt`, { replace: true });
+        }
+    }, [lang, navigate]);
 
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+    const handleSetLanguage = (newLang: Language) => {
+        setLanguage(newLang);
+        navigate(`/${newLang}`, { replace: true });
+    };
+
+    const t = (key: string): string => translations[language]?.[key] || key;
+
+    return (
+        <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+            {children}
+        </LanguageContext.Provider>
+    );
 };
 
 export const useLanguage = () => {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error("useLanguage must be used within LanguageProvider");
-  }
-  return context;
+    const ctx = useContext(LanguageContext);
+    if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
+    return ctx;
 };
